@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>A1  Injection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/hacker.css') }}">
+</head>
+<body class="hacker-body">
+  <form method="GET">
+  <input name="q" placeholder="search (try: OR '1'='1')" value="{{ q }}">
+  <button>Search</button>
+</form>
+
+<ul>
+  {% for p in products %}
+    <li><a href="/product/{{ p[0] }}">{{ p[1] }}</a> — ${{ p[2] }}</li>
+  {% endfor %}
+</ul>
+
+  <canvas id="matrix-canvas"></canvas>
+  <header class="hacker-header"> ... </header>
+  <main class="container">
+    <section class="hacker-card">
+      <h1>A1  Injection</h1>
+      <p class="muted">Injection occurs when untrusted input is interpreted as code or commands by the interpreter.</p>
+      <h3>Safe example (concept)</h3>
+      <pre>-- vulnerable pattern (concept):
+sql = "SELECT * FROM product WHERE name LIKE '%" + user_input + "%'"</pre>
+      <h3>Why it matters</h3>
+      <p>Injection can expose or modify data, or run unwanted commands on the DB/server.</p>
+      <h3>Mitigation (recommended)</h3>
+      <ul>
+        <li>Use parameterized queries / prepared statements.</li>
+        <li>Apply input validation and least privilege for DB accounts.</li>
+        <li>Escape or bind parameters instead of concatenating.</li>
+      </ul>
+      <h3>Where to patch in this repo</h3>
+      <p>Look for raw SQL string concatenation in <code>app/routes.py</code> (search for <code>%{</code> or concatenated SQL).</p>
+    </section>
+  </main>
+  <footer class="hacker-footer"></footer>
+</body>
+</html>
